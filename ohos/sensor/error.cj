@@ -18,7 +18,7 @@
 package ohos.sensor
 
 import std.collection.HashMap
-import ohos.business_exception.getUniversalErrorMsg
+import ohos.business_exception.{BusinessException, getUniversalErrorMsg}
 
 const SERVICE_EXCEPTION: Int32 = 14500101 // Use this error code when the service is exception.
 const SENSOR_NO_SUPPORT: Int32 = 14500102 // Use this error code when the sensor is not supported by the device.
@@ -33,5 +33,11 @@ func getErrorMsg(code: Int32): String {
         return ERROR_CODE_MAP[code]
     } else {
         return "Unknown error code ${code}"
+    }
+}
+
+func checkAndThrow(code: Int32) {
+    if (code != 0) {
+        throw BusinessException(code, getErrorMsg(code))
     }
 }

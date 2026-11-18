@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Huawei Device Co., Ltd.
+ * Copyright (c) 2025-2026 Huawei Device Co., Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -16,6 +16,8 @@
 // The Cangjie API is in Beta. For details on its capabilities and limitations, please refer to the README file.
 
 package ohos.sensor
+
+import ohos.business_exception.{BusinessException, ERR_PARAMETER_ERROR}
 
 @C
 struct CAccelerometerResponse {
@@ -274,6 +276,106 @@ struct CSensorArray {
     }
 }
 
+@C
+struct CLocationOptions {
+    CLocationOptions(
+        let latitude: Float32,
+        let longitude: Float32,
+        let altitude: Float32
+    ) {}
+
+    init(data: LocationOptions) {
+        this.latitude = data.latitude
+        this.longitude = data.longitude
+        this.altitude = data.altitude
+    }
+}
+
+@C
+struct CGeomagneticResponse {
+    CGeomagneticResponse(
+        let x: Float32,
+        let y: Float32,
+        let z: Float32,
+        let geomagneticDip: Float32,
+        let deflectionAngle: Float32,
+        let levelIntensity: Float32,
+        let totalIntensity: Float32
+    ) {}
+}
+
+@C
+struct CArrFloat32 {
+    var head: CPointer<Float32> = CPointer()
+    var size: Int64 = 0
+
+    init() {}
+
+    init(head: CPointer<Float32>, size: Int64) {
+        this.head = head
+        this.size = size
+    }
+
+    func free(): Unit {
+        unsafe { LibC.free(head) }
+    }
+
+    func asArray(): Array<Float32> {
+        if (head.isNull()) {
+            return Array<Float32>()
+        }
+        Array<Float32>(size) { i => unsafe { head.read(i) } }
+    }
+}
+
+@C
+struct CCoordinatesOptions {
+    CCoordinatesOptions(
+        let x: Int32,
+        let y: Int32
+    ) {}
+
+    init(data: CoordinatesOptions) {
+        this.x = data.x
+        this.y = data.y
+    }
+}
+
+@C
+struct CRotationMatrixResponse {
+    CRotationMatrixResponse(
+        let rotation: CArrFloat32,
+        let inclination: CArrFloat32
+    ) {}
+
+    init() {
+        this.rotation = CArrFloat32()
+        this.inclination = CArrFloat32()
+    }
+
+    func free() {
+        rotation.free()
+        inclination.free()
+    }
+}
+
+func toCArrayFloat32(arr: Array<Float32>): CArrFloat32 {
+    if (arr.isEmpty()) {
+        throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
+    }
+
+    unsafe {
+        let p = LibC.malloc<Float32>(count: arr.size)
+        if (p.isNull()) {
+            throw BusinessException(SERVICE_EXCEPTION, getErrorMsg(SERVICE_EXCEPTION))
+        }
+        for (i in 0..arr.size) {
+            p.write(i, arr[i])
+        }
+        return CArrFloat32(p, arr.size)
+    }
+}
+
 foreign {
     /**
      * Subscribe to sensor data changes.
@@ -284,4 +386,16 @@ foreign {
     func FfiSensorSubscribeSensor(sensorId: Int32, interval: Int64, callback: Int64): Int32
     func FfiSensorUnSubscribeSensor(sensorId: Int32): Int32
     func FfiSensorGetAllSensors(sensors: CPointer<CSensorArray>): Int32
+    func FfiSensorGetGeomagneticInfo(location: CLocationOptions, timeMillis: Int64): CGeomagneticResponse
+    func FfiSensorGetDeviceAltitude(seaPressure: Float32, currentPressure: Float32, altitude: CPointer<Float32>): Int32
+    func FfiSensorGetInclination(inclinationMatrix: CArrFloat32, inclination: CPointer<Float32>): Int32
+    func FfiSensorGetAngleVariation(currentRotationMatrix: CArrFloat32, preRotationMatrix: CArrFloat32,
+        angleChange: CPointer<CArrFloat32>): Int32
+    func FfiSensorGetRotationMatrix(rotationVector: CArrFloat32, rotationMatrix: CPointer<CArrFloat32>): Int32
+    func FfiSensorTransformRotationMatrix(inRotationVector: CArrFloat32, coordinates: CCoordinatesOptions,
+        rotationMatrix: CPointer<CArrFloat32>): Int32
+    func FfiSensorGetQuaternion(rotationVector: CArrFloat32, quaternion: CPointer<CArrFloat32>): Int32
+    func FfiSensorGetOrientation(rotationMatrix: CArrFloat32, rotationAngle: CPointer<CArrFloat32>): Int32
+    func FfiSensorGetRotationMatrixByGravityAndGeomagnetic(gravity: CArrFloat32, geomagnetic: CArrFloat32,
+        matrix: CPointer<CRotationMatrixResponse>): Int32
 }

@@ -26,6 +26,7 @@ ohos_cangjie_shared_library("ohos.sensor") {
       "ffi.cj",
       "log.cj",
       "sensor.cj",
+      "sensor_algorithm.cj",
       "sensor_manager.cj",
     ]
   }
