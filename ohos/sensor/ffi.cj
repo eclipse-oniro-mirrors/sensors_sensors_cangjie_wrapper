@@ -17,7 +17,7 @@
 
 package ohos.sensor
 
-import ohos.business_exception.{BusinessException, ERR_PARAMETER_ERROR}
+import ohos.business_exception.BusinessException
 
 @C
 struct CAccelerometerResponse {
@@ -360,10 +360,6 @@ struct CRotationMatrixResponse {
 }
 
 func toCArrayFloat32(arr: Array<Float32>): CArrFloat32 {
-    if (arr.isEmpty()) {
-        throw BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR))
-    }
-
     unsafe {
         let p = LibC.malloc<Float32>(count: arr.size)
         if (p.isNull()) {

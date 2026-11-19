@@ -576,20 +576,18 @@ public func startVibration(effect: VibrateEffect, attribute: VibrateAttribute,
     callback: AsyncCallback<Unit>): Unit {
     spawn {
         var cAttribute = RetVibrateAttribute(attribute)
-        try {
-            unsafe {
-                let codePtr = LibC.malloc<Int32>(count: 1)
-                codePtr.write(0, 0i32)
-                doStartVibration(effect, cAttribute, codePtr)
-                let code = codePtr.read(0)
-                LibC.free(codePtr)
-                checkAndThrow(code)
-                callback(None, ())
-            }
-        } catch (err: BusinessException) {
-            callback(err, None)
-        } finally {
+        unsafe {
+            let codePtr = LibC.malloc<Int32>(count: 1)
+            codePtr.write(0, 0i32)
+            doStartVibration(effect, cAttribute, codePtr)
+            let code = codePtr.read(0)
+            LibC.free(codePtr)
             cAttribute.free()
+            if (code != 0) {
+                callback(BusinessException(code, getErrorMsg(code)), None)
+                return
+            }
+            callback(None, ())
         }
     }
 }
@@ -620,19 +618,16 @@ private func getStopModeStr(stopMode: VibratorStopMode): String {
 ]
 public func stopVibration(stopMode: VibratorStopMode, callback: AsyncCallback<Unit>): Unit {
     spawn {
-        var cStr: CString = CString(CPointer<UInt8>())
-        try {
-            unsafe {
-                cStr = LibC.mallocCString(getStopModeStr(stopMode))
-                var code = 0i32
-                FfiVibratorStopVibrationMode(cStr, inout code)
-                checkAndThrow(code)
-                callback(None, ())
+        unsafe {
+            let cStr = LibC.mallocCString(getStopModeStr(stopMode))
+            var code = 0i32
+            FfiVibratorStopVibrationMode(cStr, inout code)
+            LibC.free(cStr)
+            if (code != 0) {
+                callback(BusinessException(code, getErrorMsg(code)), None)
+                return
             }
-        } catch (err: BusinessException) {
-            callback(err, None)
-        } finally {
-            unsafe { LibC.free(cStr) }
+            callback(None, ())
         }
     }
 }
@@ -653,19 +648,16 @@ public func stopVibration(stopMode: VibratorStopMode, callback: AsyncCallback<Un
 ]
 public func isSupportEffect(effectId: String, callback: AsyncCallback<Bool>): Unit {
     spawn {
-        var cStr: CString = CString(CPointer<UInt8>())
-        try {
-            unsafe {
-                cStr = LibC.mallocCString(effectId)
-                var code = 0i32
-                let ret = FfiVibratorSupportEffect(cStr, inout code)
-                checkAndThrow(code)
-                callback(None, ret)
+        unsafe {
+            let cStr = LibC.mallocCString(effectId)
+            var code = 0i32
+            let ret = FfiVibratorSupportEffect(cStr, inout code)
+            LibC.free(cStr)
+            if (code != 0) {
+                callback(BusinessException(code, getErrorMsg(code)), None)
+                return
             }
-        } catch (err: BusinessException) {
-            callback(err, None)
-        } finally {
-            unsafe { LibC.free(cStr) }
+            callback(None, ret)
         }
     }
 }

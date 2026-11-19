@@ -17,7 +17,7 @@
 
 package ohos.sensor
 
-import ohos.business_exception.{BusinessException, AsyncCallback}
+import ohos.business_exception.{BusinessException, AsyncCallback, ERR_PARAMETER_ERROR}
 import ohos.labels.APILevel
 
 class GeomagneticResponseImpl {
@@ -449,18 +449,21 @@ public func getDeviceAltitude(seaPressure: Float32, currentPressure: Float32,
 ]
 public func getInclination(inclinationMatrix: Array<Float32>,
     callback: AsyncCallback<Float32>): Unit {
+    if (inclinationMatrix.isEmpty()) {
+        callback(BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR)), None)
+        return
+    }
     spawn {
-        try {
-            unsafe {
-                var inclination: Float32 = 0.0
-                let cArr = toCArrayFloat32(inclinationMatrix)
-                let ret = FfiSensorGetInclination(cArr, inout inclination)
-                cArr.free()
-                checkAndThrow(ret)
-                callback(None, inclination)
+        unsafe {
+            var inclination: Float32 = 0.0
+            let cArr = toCArrayFloat32(inclinationMatrix)
+            let ret = FfiSensorGetInclination(cArr, inout inclination)
+            cArr.free()
+            if (ret != 0) {
+                callback(BusinessException(ret, getErrorMsg(ret)), None)
+                return
             }
-        } catch (err: BusinessException) {
-            callback(err, None)
+            callback(None, inclination)
         }
     }
 }
@@ -482,23 +485,26 @@ public func getInclination(inclinationMatrix: Array<Float32>,
 ]
 public func getAngleVariation(currentRotationMatrix: Array<Float32>, preRotationMatrix: Array<Float32>,
     callback: AsyncCallback<Array<Float32>>): Unit {
+    if (currentRotationMatrix.isEmpty() || preRotationMatrix.isEmpty()) {
+        callback(BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR)), None)
+        return
+    }
     spawn {
         var result: CArrFloat32 = CArrFloat32()
-        try {
-            unsafe {
-                let cCurrent = toCArrayFloat32(currentRotationMatrix)
-                let cPre = toCArrayFloat32(preRotationMatrix)
-                let ret = FfiSensorGetAngleVariation(cCurrent, cPre, inout result)
-                cCurrent.free()
-                cPre.free()
-                checkAndThrow(ret)
-                let arr = result.asArray()
-                callback(None, arr)
+        unsafe {
+            let cCurrent = toCArrayFloat32(currentRotationMatrix)
+            let cPre = toCArrayFloat32(preRotationMatrix)
+            let ret = FfiSensorGetAngleVariation(cCurrent, cPre, inout result)
+            cCurrent.free()
+            cPre.free()
+            if (ret != 0) {
+                result.free()
+                callback(BusinessException(ret, getErrorMsg(ret)), None)
+                return
             }
-        } catch (err: BusinessException) {
-            callback(err, None)
-        } finally {
+            let arr = result.asArray()
             result.free()
+            callback(None, arr)
         }
     }
 }
@@ -518,21 +524,24 @@ public func getAngleVariation(currentRotationMatrix: Array<Float32>, preRotation
 ]
 public func getRotationMatrix(rotationVector: Array<Float32>,
     callback: AsyncCallback<Array<Float32>>): Unit {
+    if (rotationVector.isEmpty()) {
+        callback(BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR)), None)
+        return
+    }
     spawn {
         var result: CArrFloat32 = CArrFloat32()
-        try {
-            unsafe {
-                let cArr = toCArrayFloat32(rotationVector)
-                let ret = FfiSensorGetRotationMatrix(cArr, inout result)
-                cArr.free()
-                checkAndThrow(ret)
-                let arr = result.asArray()
-                callback(None, arr)
+        unsafe {
+            let cArr = toCArrayFloat32(rotationVector)
+            let ret = FfiSensorGetRotationMatrix(cArr, inout result)
+            cArr.free()
+            if (ret != 0) {
+                result.free()
+                callback(BusinessException(ret, getErrorMsg(ret)), None)
+                return
             }
-        } catch (err: BusinessException) {
-            callback(err, None)
-        } finally {
+            let arr = result.asArray()
             result.free()
+            callback(None, arr)
         }
     }
 }
@@ -555,21 +564,24 @@ public func getRotationMatrix(rotationVector: Array<Float32>,
 ]
 public func transformRotationMatrix(inRotationVector: Array<Float32>, coordinates: CoordinatesOptions,
     callback: AsyncCallback<Array<Float32>>): Unit {
+    if (inRotationVector.isEmpty()) {
+        callback(BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR)), None)
+        return
+    }
     spawn {
         var result: CArrFloat32 = CArrFloat32()
-        try {
-            unsafe {
-                let cArr = toCArrayFloat32(inRotationVector)
-                let ret = FfiSensorTransformRotationMatrix(cArr, CCoordinatesOptions(coordinates), inout result)
-                cArr.free()
-                checkAndThrow(ret)
-                let arr = result.asArray()
-                callback(None, arr)
+        unsafe {
+            let cArr = toCArrayFloat32(inRotationVector)
+            let ret = FfiSensorTransformRotationMatrix(cArr, CCoordinatesOptions(coordinates), inout result)
+            cArr.free()
+            if (ret != 0) {
+                result.free()
+                callback(BusinessException(ret, getErrorMsg(ret)), None)
+                return
             }
-        } catch (err: BusinessException) {
-            callback(err, None)
-        } finally {
+            let arr = result.asArray()
             result.free()
+            callback(None, arr)
         }
     }
 }
@@ -589,21 +601,24 @@ public func transformRotationMatrix(inRotationVector: Array<Float32>, coordinate
 ]
 public func getQuaternion(rotationVector: Array<Float32>,
     callback: AsyncCallback<Array<Float32>>): Unit {
+    if (rotationVector.isEmpty()) {
+        callback(BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR)), None)
+        return
+    }
     spawn {
         var result: CArrFloat32 = CArrFloat32()
-        try {
-            unsafe {
-                let cArr = toCArrayFloat32(rotationVector)
-                let ret = FfiSensorGetQuaternion(cArr, inout result)
-                cArr.free()
-                checkAndThrow(ret)
-                let arr = result.asArray()
-                callback(None, arr)
+        unsafe {
+            let cArr = toCArrayFloat32(rotationVector)
+            let ret = FfiSensorGetQuaternion(cArr, inout result)
+            cArr.free()
+            if (ret != 0) {
+                result.free()
+                callback(BusinessException(ret, getErrorMsg(ret)), None)
+                return
             }
-        } catch (err: BusinessException) {
-            callback(err, None)
-        } finally {
+            let arr = result.asArray()
             result.free()
+            callback(None, arr)
         }
     }
 }
@@ -625,21 +640,24 @@ public func getQuaternion(rotationVector: Array<Float32>,
 ]
 public func getOrientation(rotationMatrix: Array<Float32>,
     callback: AsyncCallback<Array<Float32>>): Unit {
+    if (rotationMatrix.isEmpty()) {
+        callback(BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR)), None)
+        return
+    }
     spawn {
         var result: CArrFloat32 = CArrFloat32()
-        try {
-            unsafe {
-                let cArr = toCArrayFloat32(rotationMatrix)
-                let ret = FfiSensorGetOrientation(cArr, inout result)
-                cArr.free()
-                checkAndThrow(ret)
-                let arr = result.asArray()
-                callback(None, arr)
+        unsafe {
+            let cArr = toCArrayFloat32(rotationMatrix)
+            let ret = FfiSensorGetOrientation(cArr, inout result)
+            cArr.free()
+            if (ret != 0) {
+                result.free()
+                callback(BusinessException(ret, getErrorMsg(ret)), None)
+                return
             }
-        } catch (err: BusinessException) {
-            callback(err, None)
-        } finally {
+            let arr = result.asArray()
             result.free()
+            callback(None, arr)
         }
     }
 }
@@ -661,23 +679,26 @@ public func getOrientation(rotationMatrix: Array<Float32>,
 ]
 public func getRotationMatrix(gravity: Array<Float32>, geomagnetic: Array<Float32>,
     callback: AsyncCallback<RotationMatrixResponse>): Unit {
+    if (gravity.isEmpty() || geomagnetic.isEmpty()) {
+        callback(BusinessException(ERR_PARAMETER_ERROR, getErrorMsg(ERR_PARAMETER_ERROR)), None)
+        return
+    }
     spawn {
         var result: CRotationMatrixResponse = CRotationMatrixResponse()
-        try {
-            unsafe {
-                let cGravity = toCArrayFloat32(gravity)
-                let cGeomagnetic = toCArrayFloat32(geomagnetic)
-                let ret = FfiSensorGetRotationMatrixByGravityAndGeomagnetic(cGravity, cGeomagnetic, inout result)
-                cGravity.free()
-                cGeomagnetic.free()
-                checkAndThrow(ret)
-                let resp = RotationMatrixResponse(result)
-                callback(None, resp)
+        unsafe {
+            let cGravity = toCArrayFloat32(gravity)
+            let cGeomagnetic = toCArrayFloat32(geomagnetic)
+            let ret = FfiSensorGetRotationMatrixByGravityAndGeomagnetic(cGravity, cGeomagnetic, inout result)
+            cGravity.free()
+            cGeomagnetic.free()
+            if (ret != 0) {
+                result.free()
+                callback(BusinessException(ret, getErrorMsg(ret)), None)
+                return
             }
-        } catch (err: BusinessException) {
-            callback(err, None)
-        } finally {
+            let resp = RotationMatrixResponse(result)
             result.free()
+            callback(None, resp)
         }
     }
 }
