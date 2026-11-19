@@ -136,36 +136,6 @@ public class GeomagneticResponse {
         set(v) { geomagneticResponseImpl.totalIntensity_ = v }
     }
 
-    /**
-     * A constructor used to create a GeomagneticResponse.
-     *
-     * @param { Float32 } x - North component of the geomagnetic field, in nT.
-     * @param { Float32 } y - East component of the geomagnetic field, in nT.
-     * @param { Float32 } z - Vertical component of the geomagnetic field, in nT.
-     * @param { Float32 } geomagneticDip - Magnetic dip, also called magnetic inclination, which is the angle measured
-     *     from the horizontal plane to the magnetic field vector, in degrees.
-     * @param { Float32 } deflectionAngle - Magnetic declination, which is the angle between true north (geographic
-     *     north) and the magnetic north (the horizontal component of the field), in degrees.
-     * @param { Float32 } levelIntensity - Horizontal intensity of the magnetic field vector field, in nT.
-     * @param { Float32 } totalIntensity - Total intensity of the magnetic field vector, in nT.
-     */
-    @!APILevel[
-        since: "26.1.0",
-        syscap: "SystemCapability.Sensors.Sensor"
-    ]
-    public init(
-        x: Float32,
-        y: Float32,
-        z: Float32,
-        geomagneticDip: Float32,
-        deflectionAngle: Float32,
-        levelIntensity: Float32,
-        totalIntensity: Float32
-    ) {
-        this.geomagneticResponseImpl = GeomagneticResponseImpl(x, y, z, geomagneticDip, deflectionAngle,
-            levelIntensity, totalIntensity)
-    }
-
     init(data: CGeomagneticResponse) {
         this.geomagneticResponseImpl = GeomagneticResponseImpl(data.x, data.y, data.z, data.geomagneticDip,
             data.deflectionAngle, data.levelIntensity, data.totalIntensity)
@@ -354,23 +324,6 @@ public class RotationMatrixResponse {
     public mut prop inclination: Array<Float32> {
         get() { rotationMatrixResponseImpl.inclination_ }
         set(v) { rotationMatrixResponseImpl.inclination_ = v }
-    }
-
-    /**
-     * A constructor used to create a RotationMatrixResponse.
-     *
-     * @param { Array<Float32> } rotation - Rotation matrix.
-     * @param { Array<Float32> } inclination - Inclination matrix.
-     */
-    @!APILevel[
-        since: "26.1.0",
-        syscap: "SystemCapability.Sensors.Sensor"
-    ]
-    public init(
-        rotation: Array<Float32>,
-        inclination: Array<Float32>
-    ) {
-        this.rotationMatrixResponseImpl = RotationMatrixResponseImpl(rotation, inclination)
     }
 
     init(data: CRotationMatrixResponse) {
