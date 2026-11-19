@@ -16,6 +16,7 @@
 package ohos.sensor
 
 import ohos.callback_invoke.{CallbackObject, Callback1Argument}
+import ohos.business_exception.AsyncCallback
 import ohos.labels.*
 
 @!APILevel[
@@ -1104,4 +1105,219 @@ public func getSensorList(): Array<Sensor> {
 ]
 public func getSingleSensor(sensorType: SensorId): Sensor {
     return Sensor()
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor"
+]
+public class GeomagneticResponse {
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop x: Float32 { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop y: Float32 { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop z: Float32 { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop geomagneticDip: Float32 { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop deflectionAngle: Float32 { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop levelIntensity: Float32 { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop totalIntensity: Float32 { get(), set(v) }
+
+    internal init() {}
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor"
+]
+public class LocationOptions {
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop latitude: Float32 { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop longitude: Float32 { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop altitude: Float32 { get(), set(v) }
+
+    public init(latitude: Float32, longitude: Float32, altitude: Float32) {
+        super()
+        this.latitude = latitude
+        this.longitude = longitude
+        this.altitude = altitude
+    }
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor"
+]
+public class CoordinatesOptions {
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop x: Int32 { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop y: Int32 { get(), set(v) }
+
+    public init(x: Int32, y: Int32) {
+        super()
+        this.x = x
+        this.y = y
+    }
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor"
+]
+public class RotationMatrixResponse {
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop rotation: Array<Float32> { get(), set(v) }
+
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
+    public mut prop inclination: Array<Float32> { get(), set(v) }
+
+    internal init() {}
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor",
+    throwexception: true
+]
+public func getGeomagneticInfo(locationOptions: LocationOptions, timeMillis: Int64,
+    callback: AsyncCallback<GeomagneticResponse>): Unit {
+    return ()
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor",
+    throwexception: true
+]
+public func getDeviceAltitude(seaPressure: Float32, currentPressure: Float32,
+    callback: AsyncCallback<Float32>): Unit {
+    return ()
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor",
+    throwexception: true
+]
+public func getInclination(inclinationMatrix: Array<Float32>,
+    callback: AsyncCallback<Float32>): Unit {
+    return ()
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor",
+    throwexception: true
+]
+public func getAngleVariation(currentRotationMatrix: Array<Float32>, preRotationMatrix: Array<Float32>,
+    callback: AsyncCallback<Array<Float32>>): Unit {
+    return ()
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor",
+    throwexception: true
+]
+public func getRotationMatrix(rotationVector: Array<Float32>,
+    callback: AsyncCallback<Array<Float32>>): Unit {
+    return ()
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor",
+    throwexception: true
+]
+public func transformRotationMatrix(inRotationVector: Array<Float32>, coordinates: CoordinatesOptions,
+    callback: AsyncCallback<Array<Float32>>): Unit {
+    return ()
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor",
+    throwexception: true
+]
+public func getQuaternion(rotationVector: Array<Float32>,
+    callback: AsyncCallback<Array<Float32>>): Unit {
+    return ()
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor",
+    throwexception: true
+]
+public func getOrientation(rotationMatrix: Array<Float32>,
+    callback: AsyncCallback<Array<Float32>>): Unit {
+    return ()
+}
+
+@!APILevel[
+    since: "26.1.0",
+    syscap: "SystemCapability.Sensors.Sensor",
+    throwexception: true
+]
+public func getRotationMatrix(gravity: Array<Float32>, geomagnetic: Array<Float32>,
+    callback: AsyncCallback<RotationMatrixResponse>): Unit {
+    return ()
 }

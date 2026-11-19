@@ -21,6 +21,7 @@ ohos_cangjie_shared_library("kit.SensorServiceKit") {
 
   cj_deps = [
     "../../ohos/sensor:ohos.sensor",
+    "../../ohos/vibrator:ohos.vibrator",
   ]
 
   subsystem_name = "sensors"
