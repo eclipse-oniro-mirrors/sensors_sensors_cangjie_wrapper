@@ -1154,16 +1154,7 @@ public class GeomagneticResponse {
     ]
     public mut prop totalIntensity: Float32 { get(), set(v) }
 
-    public init(x: Float32, y: Float32, z: Float32, geomagneticDip: Float32, deflectionAngle: Float32, levelIntensity: Float32, totalIntensity: Float32) {
-        super()
-        this.x = x
-        this.y = y
-        this.z = z
-        this.geomagneticDip = geomagneticDip
-        this.deflectionAngle = deflectionAngle
-        this.levelIntensity = levelIntensity
-        this.totalIntensity = totalIntensity
-    }
+    internal init() {}
 }
 
 @!APILevel[
@@ -1238,11 +1229,7 @@ public class RotationMatrixResponse {
     ]
     public mut prop inclination: Array<Float32> { get(), set(v) }
 
-    public init(rotation: Array<Float32>, inclination: Array<Float32>) {
-        super()
-        this.rotation = rotation
-        this.inclination = inclination
-    }
+    internal init() {}
 }
 
 @!APILevel[
