@@ -1116,43 +1116,85 @@ public class GeomagneticResponse {
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop x: Float32 { get(), set(v) }
+    public mut prop x: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop y: Float32 { get(), set(v) }
+    public mut prop y: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop z: Float32 { get(), set(v) }
+    public mut prop z: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop geomagneticDip: Float32 { get(), set(v) }
+    public mut prop geomagneticDip: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop deflectionAngle: Float32 { get(), set(v) }
+    public mut prop deflectionAngle: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop levelIntensity: Float32 { get(), set(v) }
+    public mut prop levelIntensity: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop totalIntensity: Float32 { get(), set(v) }
+    public mut prop totalIntensity: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
     internal init() {}
 }
@@ -1166,25 +1208,43 @@ public class LocationOptions {
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop latitude: Float32 { get(), set(v) }
+    public mut prop latitude: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop longitude: Float32 { get(), set(v) }
+    public mut prop longitude: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop altitude: Float32 { get(), set(v) }
+    public mut prop altitude: Float32 {
+        get() {
+            0.0
+        }
+        set(v) {
+        }
+    }
 
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
     public init(latitude: Float32, longitude: Float32, altitude: Float32) {
-        super()
-        this.latitude = latitude
-        this.longitude = longitude
-        this.altitude = altitude
     }
 }
 
@@ -1197,18 +1257,31 @@ public class CoordinatesOptions {
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop x: Int32 { get(), set(v) }
+    public mut prop x: Int32 {
+        get() {
+            0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop y: Int32 { get(), set(v) }
+    public mut prop y: Int32 {
+        get() {
+            0
+        }
+        set(v) {
+        }
+    }
 
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.Sensor"
+    ]
     public init(x: Int32, y: Int32) {
-        super()
-        this.x = x
-        this.y = y
     }
 }
 
@@ -1221,13 +1294,25 @@ public class RotationMatrixResponse {
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop rotation: Array<Float32> { get(), set(v) }
+    public mut prop rotation: Array<Float32> {
+        get() {
+            Array<Float32>()
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.Sensor"
     ]
-    public mut prop inclination: Array<Float32> { get(), set(v) }
+    public mut prop inclination: Array<Float32> {
+        get() {
+            Array<Float32>()
+        }
+        set(v) {
+        }
+    }
 
     internal init() {}
 }
