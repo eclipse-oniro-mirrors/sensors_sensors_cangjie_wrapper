@@ -18,10 +18,6 @@ package ohos.vibrator
 import ohos.business_exception.AsyncCallback
 import ohos.labels.*
 
-@!APILevel[
-    since: "26.1.0",
-    syscap: "SystemCapability.Sensors.MiscDevice"
-]
 public type Usage = String
 
 @!APILevel[
@@ -146,18 +142,31 @@ public class VibrateTime {
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop effectType: String { get(), set(v) }
+    public mut prop effectType: String {
+        get() {
+            ""
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop duration: Int32 { get(), set(v) }
+    public mut prop duration: Int32 {
+        get() {
+            0
+        }
+        set(v) {
+        }
+    }
 
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.MiscDevice"
+    ]
     public init(effectType: String, duration: Int32) {
-        super()
-        this.effectType = effectType
-        this.duration = duration
     }
 }
 
@@ -170,32 +179,55 @@ public class VibratePreset {
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop effectType: String { get(), set(v) }
+    public mut prop effectType: String {
+        get() {
+            ""
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop effectId: String { get(), set(v) }
+    public mut prop effectId: String {
+        get() {
+            ""
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop count: ?Int32 { get(), set(v) }
+    public mut prop count: ?Int32 {
+        get() {
+            None
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop intensity: ?Int32 { get(), set(v) }
+    public mut prop intensity: ?Int32 {
+        get() {
+            None
+        }
+        set(v) {
+        }
+    }
 
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.MiscDevice"
+    ]
     public init(effectType: String, effectId: String, count!: ?Int32 = None, intensity!: ?Int32 = None) {
-        super()
-        this.effectType = effectType
-        this.effectId = effectId
-        this.count = count
-        this.intensity = intensity
     }
 }
 
@@ -208,18 +240,31 @@ public class VibrateFromFile {
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop effectType: String { get(), set(v) }
+    public mut prop effectType: String {
+        get() {
+            ""
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop hapticFd: HapticFileDescriptor { get(), set(v) }
+    public mut prop hapticFd: HapticFileDescriptor {
+        get() {
+            HapticFileDescriptor(0)
+        }
+        set(v) {
+        }
+    }
 
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.MiscDevice"
+    ]
     public init(effectType: String, hapticFd: HapticFileDescriptor) {
-        super()
-        this.effectType = effectType
-        this.hapticFd = hapticFd
     }
 }
 
@@ -232,25 +277,43 @@ public class HapticFileDescriptor {
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop fd: Int32 { get(), set(v) }
+    public mut prop fd: Int32 {
+        get() {
+            0
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop offSet: ?Int64 { get(), set(v) }
+    public mut prop offSet: ?Int64 {
+        get() {
+            None
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop length: ?Int64 { get(), set(v) }
+    public mut prop length: ?Int64 {
+        get() {
+            None
+        }
+        set(v) {
+        }
+    }
 
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.MiscDevice"
+    ]
     public init(fd: Int32, offSet!: ?Int64 = None, length!: ?Int64 = None) {
-        super()
-        this.fd = fd
-        this.offSet = offSet
-        this.length = length
     }
 }
 
@@ -263,18 +326,31 @@ public class VibrateAttribute {
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop id: ?Int32 { get(), set(v) }
+    public mut prop id: ?Int32 {
+        get() {
+            None
+        }
+        set(v) {
+        }
+    }
 
     @!APILevel[
         since: "26.1.0",
         syscap: "SystemCapability.Sensors.MiscDevice"
     ]
-    public mut prop usage: Usage { get(), set(v) }
+    public mut prop usage: Usage {
+        get() {
+            ""
+        }
+        set(v) {
+        }
+    }
 
+    @!APILevel[
+        since: "26.1.0",
+        syscap: "SystemCapability.Sensors.MiscDevice"
+    ]
     public init(usage: Usage, id!: ?Int32 = None) {
-        super()
-        this.id = id
-        this.usage = usage
     }
 }
 
